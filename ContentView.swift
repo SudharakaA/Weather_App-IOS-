@@ -8,13 +8,43 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var searchText = ""
+    @State private var cityName = "City Name"
+    @State private var temperature = "22°C"
+    @State private var weatherDescription = "Partly Cloudy"
+    @State private var weatherIcon = "cloud.sun.fill"
+
     var body: some View {
         NavigationView {
             VStack {
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                    .foregroundStyle(.tint)
-                Text("Hello, world!")
+                TextField("Search for a city", text: $searchText, onCommit: {
+                    searchWeather(for: searchText)
+                })
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+
+                VStack {
+                    Text(cityName)
+                        .font(.largeTitle)
+                        .bold()
+                    Text("Today, Jan 2")
+                        .font(.title3)
+                        .foregroundColor(.secondary)
+                    
+                    Image(systemName: weatherIcon)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 100, height: 100)
+                        .foregroundStyle(.yellow, .blue)
+                    
+                    Text(temperature)
+                        .font(.system(size: 64, weight: .bold))
+                    Text(weatherDescription)
+                        .font(.title2)
+                        .foregroundColor(.secondary)
+                }
+                .padding()
+
                 NavigationLink(destination: WeatherView()) {
                     Text("Go to Weather View")
                         .padding()
@@ -25,6 +55,15 @@ struct ContentView: View {
             }
             .padding()
         }
+    }
+
+    private func searchWeather(for city: String) {
+        // Implement the search functionality here
+        // For now, we'll just simulate a search result
+        cityName = city
+        temperature = "25°C"
+        weatherDescription = "Sunny"
+        weatherIcon = "sun.max.fill"
     }
 }
 #Preview {
