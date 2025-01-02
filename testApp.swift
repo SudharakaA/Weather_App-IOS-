@@ -9,9 +9,22 @@ import SwiftUI
 
 @main
 struct testApp: App {
+    @State private var isLoading = true
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if isLoading {
+                LoadingView()
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            isLoading = false
+                        }
+                    }
+            } else {
+                NavigationView {
+                    ContentView()
+                }
+            }
         }
     }
 }
